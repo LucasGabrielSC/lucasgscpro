@@ -1,0 +1,127 @@
+<?php
+/*
+    if(isset($_POST["submit"])) {
+        print_r(value: $_POST['nome']);
+        print_r(value: '<br>'); 
+        print_r(value: $_POST['email']);
+        print_r(value: '<br>');
+        print_r(value: $_POST['telefone']);
+        print_r(value: '<br>');
+        print_r(value: $_POST['password']);
+        print_r(value: '<br>');
+        print_r(value: $_POST['tipo-pessoa']);
+}
+*/
+
+
+include_once("config.php");
+
+if (isset($_POST["submit"])) {
+    $nome     = $_POST["nome"];
+    $email    = $_POST["email"];
+    $telefone = $_POST["telefone"];
+    $senha    = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+    $pessoa   = $_POST["tipo-pessoa"];
+
+    // Ajuste o SQL de acordo com sua tabela:
+    $sql = "INSERT INTO usuarios (nome, email, telefone, pessoa, senha) 
+            VALUES ('$nome', '$email', '$telefone', '$pessoa', '$senha')";
+
+    if (mysqli_query($conexao, $sql)) {
+        echo "✅ Cadastro realizado com sucesso!";
+    } else {
+        echo "❌ Erro ao cadastrar: " . mysqli_error($conexao);
+    }
+}
+?>
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registre-se</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!--
+    fontes e icones
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!--
+    apendice
+    -->
+</head>
+<body>
+   
+        <header class="nav-desktop">
+            <div class="interface">
+                <div class="logo">
+                    <a href="index.html" alt="">
+                        <img src="images/logo-jaguar.png" alt="LogoLucas" width="180" ;>
+                    </a>
+                </div>
+ 
+                <div class="checkin">
+                    <div>
+                    <a href="login.html">
+                    <button class="btn-login">Entrar.</button>
+                    </a>
+                    </div>
+                 
+         
+                </div>   
+            </div> <!--caixa de elementos do header-->
+
+
+    </header>
+    
+    <section class="interface">
+        <div class="registro">
+
+            <form action="cadastro.php" method="POST">
+                <fieldset>
+                    <legend> Registre-se</legend><br>
+                        <div class="caixa">
+                            <label for="nome">Nome Completo</label>
+                            <input type="text" name="nome" id="nome" class="inputuser" required>
+
+                        </div>
+                        <div class="caixa">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" class="inputuser" required>
+                        
+                        </div>
+                        <div class="caixa">
+                            <label for="telefone">Telefone</label>
+                            <input type="tel" name="telefone" id="telefone" class="inputuser" required>
+                            
+                        </div>
+                        <div class="caixa">
+                            <label for="password">Escolha uma senha:</label><br>
+                            <input type="password" id="password" name="senha" class="inputuser" required>
+                        </div>
+                        <div class="radio">
+                        <p>Sou:</p>
+                        
+                            <input type="radio" id="visitante" name="tipo-pessoa" value="visitante"  required>
+                            <label for="visitante">Visitante</label>
+                            <input type="radio" id="recrutador" name="tipo-pessoa" value="recrutador"  required>
+                            <label for="recrutrador">Recrutador</label>
+                        
+                        </div>
+                        <div class="btn-container">
+                            <button><input type="submit" name="submit" id="submit"></button>
+                        </div>
+                </fieldset>
+            </form>
+
+        </div>             
+    </section>
+</body>
+</html>
