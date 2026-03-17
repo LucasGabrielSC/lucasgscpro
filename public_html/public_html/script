@@ -1,0 +1,9 @@
+
+(function(){
+  const header = document.querySelector('header.nav-desktop') || document.querySelector('.nav-desktop');
+  if (!header) return;
+  window.addEventListener('scroll', () => {
+    const sc = window.scrollY || document.documentElement.scrollTop;
+    header.classList.toggle('scrolled', sc > 1);
+  }, { passive: true });
+})();
